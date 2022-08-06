@@ -1,6 +1,6 @@
-'''
+"""
 BMCMemoryMap
-'''
+"""
 from Products.DataCollector.plugins.CollectorPlugin import (
     SnmpPlugin, GetTableMap,
 )
@@ -8,9 +8,9 @@ from DeviceDefine import BMCSTATUS
 
 
 class BMCMemoryMap(SnmpPlugin):
-    '''
+    """
     BMCMemoryMap
-    '''
+    """
 
     relname = 'bmcmemorys'
     modname = 'ZenPacks.community.xFusionServer.BMCMemory'
@@ -25,14 +25,14 @@ class BMCMemoryMap(SnmpPlugin):
                 '.6': 'memoryStatus',
                 '.8': 'memoryLocation',
                 '.10': 'memoryDevicename',
-                }
-            ),
-        )
+            }
+        ),
+    )
 
     def process(self, device, results, log):
-        '''
+        """
         process oid
-        '''
+        """
 
         log = log
         device = device
@@ -40,11 +40,11 @@ class BMCMemoryMap(SnmpPlugin):
 
         relmap = self.relMap()
         for snmpindex, row in temp_sensors.items():
-            bbit = (int(row.get('memoryDimmIndex'))-1) / 8
-            mbit = (int(row.get('memoryDimmIndex'))-1) % 4
-            sbit = (int(row.get('memoryDimmIndex'))-1) % 2
+            bbit = (int(row.get('memoryDimmIndex')) - 1) / 8
+            mbit = (int(row.get('memoryDimmIndex')) - 1) % 4
+            sbit = (int(row.get('memoryDimmIndex')) - 1) % 2
 
-            name = 'DIMM_' + str(bbit) + str(mbit) + str(sbit)
+            name = 'DIMM_%s%s%s' % (str(bbit), str(mbit), str(sbit))
             if not name:
                 log.warn('Skipping temperature sensor with no name')
                 continue
@@ -62,6 +62,6 @@ class BMCMemoryMap(SnmpPlugin):
                 'size': row.get('memorySize'),
                 'frequency': row.get('memoryClockRate'),
                 'status': BMCSTATUS.get(row.get('memoryStatus'), 'unknown')
-                }))
+            }))
 
         return relmap

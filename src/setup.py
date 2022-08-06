@@ -1,9 +1,10 @@
+from setuptools import setup, find_packages
+
 ################################
 # These variables are overwritten by Zenoss when the ZenPack is exported
 # or saved.  Do not modify them directly here.
-# NB: PACKAGES is deprecated
 NAME = "ZenPacks.community.xFusionServer"
-VERSION = "2.0.17"
+VERSION = "2.0.18"
 AUTHOR = "XFUSION"
 LICENSE = "GPLv2"
 NAMESPACE_PACKAGES = ['ZenPacks', 'ZenPacks.community']
@@ -14,9 +15,6 @@ PREV_ZENPACK_NAME = ""
 # STOP_REPLACEMENTS
 ################################
 # Zenoss will not overwrite any changes you make below here.
-
-from setuptools import setup, find_packages
-
 
 setup(
     # This ZenPack metadata should usually be edited with the Zenoss

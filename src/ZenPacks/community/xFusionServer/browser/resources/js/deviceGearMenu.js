@@ -75,11 +75,11 @@
 
                                     //  Following line must match the class defined in routers.py
                                     //    and the last part must match the method defined on that class
-                                    //    ie. router class = bmcRouter, method = myRouterFunc
+                                    //    ie. router class = BmcRouter, method = myRouterFunc
                                     //    The 2 input fields for comments and rackSlot are passed as
                                     //       opts to the router function.
 
-                                    Zenoss.remote.bmcRouter.routerfpc(opts,
+                                    Zenoss.remote.BmcRouter.routerfpc(opts,
                                         function (response) {
                                             if (response.success) {
                                                 new Zenoss.dialog.SimpleMessageDialog({
@@ -187,11 +187,11 @@
                     handler: function() {
                                         //  Following line must match the class defined in routers.py
                                         //    and the last part must match the method defined on that class
-                                        //    ie. router class = BMCRouter, method = myRouterFunc
+                                        //    ie. router class = BmcRouter, method = myRouterFunc
                                         //    The 2 input fields for comments and rackSlot are passed as
                                         //       opts to the router function.
 
-                                        Zenoss.remote.bmcRouter.routerbs(opts,
+                                        Zenoss.remote.BmcRouter.routerbs(opts,
                                             function (response) {
                                                 if (response.success) {
                                                     new Zenoss.dialog.SimpleMessageDialog({
@@ -307,7 +307,7 @@
                     xtype: 'DialogButton',
                     text: _t('Yes'),
                     handler: function() {
-                                        Zenoss.remote.hmmRouter.routerbbo(opts,
+                                        Zenoss.remote.HmmRouter.routerbbo(opts,
                                             function (response) {
                                                 if (response.success) {
                                                     new Zenoss.dialog.SimpleMessageDialog({
@@ -407,11 +407,11 @@
                     handler: function() {
                                         //  Following line must match the class defined in routers.py
                                         //    and the last part must match the method defined on that class
-                                        //    ie. router class = bmcRouter, method = myRouterFunc
+                                        //    ie. router class = BmcRouter, method = myRouterFunc
                                         //    The 2 input fields for comments and rackSlot are passed as
                                         //       opts to the router function.
 
-                                        Zenoss.remote.hmmRouter.routerfrucontrol(opts,
+                                        Zenoss.remote.HmmRouter.routerfrucontrol(opts,
                                             function (response) {
                                                 if (response.success) {
                                                     new Zenoss.dialog.SimpleMessageDialog({

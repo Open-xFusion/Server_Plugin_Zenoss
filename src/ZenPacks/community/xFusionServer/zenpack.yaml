@@ -1,6 +1,5 @@
 name: ZenPacks.community.xFusionServer
 
-
 classes:
   xFusionServerDevice:
     base: [zenpacklib.Device]
@@ -65,7 +64,7 @@ classes:
       frequency:
         label: Frequency
         order: 5
-        label_width: 60        
+        label_width: 60
       status:
         label: Status
         order: 1
@@ -73,7 +72,7 @@ classes:
       coreCount:
         label: Core
         order: 7
-        label_width: 30        
+        label_width: 30
       threadCount:
         label: Thread
         order: 8
@@ -213,7 +212,7 @@ classes:
     properties:
       hclocation:
         label: Location
-        label_width: 40        
+        label_width: 40
       hcchassisID:
         label: ChassisID
         label_width: 80
@@ -245,7 +244,7 @@ classes:
         label_width: 100
         order: 2
       hpsratingPower:
-        label: RatingPower        
+        label: RatingPower
         label_width: 150
         order: 5
       hpsruntimePower:
@@ -269,7 +268,7 @@ classes:
     base: [zenpacklib.Component]
     label: HMMFan
     monitoring_templates: [HMMFanDevice]
-    auto_expand_column: hfpresence    
+    auto_expand_column: hfpresence
     properties:
       hfpresence:
         label: Presence
@@ -288,7 +287,7 @@ classes:
     base: [zenpacklib.Component]
     label: HMMBlade
     monitoring_templates: [HMMBladeDevice]
-    auto_expand_column: hbIPMask    
+    auto_expand_column: hbIPMask
     properties:
       hbname:
         label: ProductName
@@ -323,7 +322,7 @@ classes:
     base: [zenpacklib.Component]
     label: HMMManagementBoard
     monitoring_templates: [HMMManagementBoardDevice]
-    auto_expand_column: hsProductName    
+    auto_expand_column: hsProductName
     properties:
       hsProductName:
         label: ProductName
@@ -366,7 +365,6 @@ class_relationships:
   - xFusionServerDevice 1:MC HMMBlade
   - xFusionServerDevice 1:MC HMMManagementBoard
 
- 
 device_classes:
   /Server/XFUSION:
     remove: true
@@ -378,7 +376,7 @@ device_classes:
         - zenoss.snmp.SnmpV3EngineIdMap
 
   /Server/XFUSION/BMC-V5_Server:
-    remove: true  
+    remove: true
     zProperties:
       zPythonClass: ZenPacks.community.xFusionServer.xFusionServerDevice
       zCollectorPlugins:
@@ -398,7 +396,7 @@ device_classes:
         - Device
         - XFUSIONBMCV5
 
-    templates: 
+    templates:
       XFUSIONBMCV5:
         description: Monitors metric of Controller
         targetPythonClass: Products.ZenModel.Device
@@ -407,7 +405,7 @@ device_classes:
             type: SNMP
             datapoints:
               presentSystemPower: {}
-            oid: 1.3.6.1.4.1.2011.2.235.1.1.1.13.0        
+            oid: 1.3.6.1.4.1.2011.2.235.1.1.1.13.0
           systemCpuUsage:
             type: SNMP
             datapoints:
@@ -436,7 +434,7 @@ device_classes:
         thresholds:
           High CPU CPUUsage:
             dsnames: [systemCpuUsage_systemCpuUsage]
-            maxval: '90'
+            maxval: "90"
             eventClass: /XFUSION/BMC
             severity: err
         graphs:
@@ -453,21 +451,21 @@ device_classes:
             maxy: 100
             graphpoints:
               systemCpuUsage:
-                dpName: systemCpuUsage_systemCpuUsage             
+                dpName: systemCpuUsage_systemCpuUsage
                 legend: CPUUsage
           PeakPower:
             units: watts
             graphpoints:
               peakPower:
                 dpName: peakPower_peakPower
-                lineType: AREA                
+                lineType: AREA
                 legend: PeakPower
           AveragePower:
             units: watts
             graphpoints:
               averagePower:
                 dpName: averagePower_averagePower
-                lineType: AREA                
+                lineType: AREA
                 legend: AveragePower
           PowerConsumption:
             units: watts
@@ -491,35 +489,35 @@ device_classes:
             type: SNMP
             datapoints:
               bmcFanStatus: {}
-            oid: 1.3.6.1.4.1.2011.2.235.1.1.8.50.1.4        
+            oid: 1.3.6.1.4.1.2011.2.235.1.1.8.50.1.4
         thresholds:
           BMC Fan Status Info1:
             dsnames: [bmcFanStatus_bmcFanStatus]
-            maxval: '1.1'
-            minval: '0'
+            maxval: "1.1"
+            minval: "0"
             eventClass: /XFUSION/BMC/Event
             severity: Clear
           BMC Fan Status Info2:
             dsnames: [bmcFanStatus_bmcFanStatus]
-            minval: '4.1'
+            minval: "4.1"
             eventClass: /XFUSION/BMC/Event
             severity: Clear
           BMC Fan Status Warning:
             dsnames: [bmcFanStatus_bmcFanStatus]
-            maxval: '1.9'
-            minval: '2.1'
+            maxval: "1.9"
+            minval: "2.1"
             eventClass: /XFUSION/BMC/Event
             severity: Warning
           BMC Fan Status Error:
             dsnames: [bmcFanStatus_bmcFanStatus]
-            maxval: '2.9'
-            minval: '3.1'
+            maxval: "2.9"
+            minval: "3.1"
             eventClass: /XFUSION/BMC/Event
             severity: Error
           BMC Fan Status Critical:
             dsnames: [bmcFanStatus_bmcFanStatus]
-            maxval: '3.9'
-            minval: '4.1'
+            maxval: "3.9"
+            minval: "4.1"
             eventClass: /XFUSION/BMC/Event
             severity: Critical
       BMCHarddiskDevice:
@@ -530,35 +528,35 @@ device_classes:
             type: SNMP
             datapoints:
               bmcHarddiskStatus: {}
-            oid: 1.3.6.1.4.1.2011.2.235.1.1.18.50.1.3        
+            oid: 1.3.6.1.4.1.2011.2.235.1.1.18.50.1.3
         thresholds:
           BMC Harddisk Status Info1:
             dsnames: [bmcHarddiskStatus_bmcHarddiskStatus]
-            maxval: '1.1'
-            minval: '0'
+            maxval: "1.1"
+            minval: "0"
             eventClass: /XFUSION/BMC/Event
             severity: Clear
           BMC Harddisk Status Info2:
             dsnames: [bmcHarddiskStatus_bmcHarddiskStatus]
-            minval: '4.1'
+            minval: "4.1"
             eventClass: /XFUSION/BMC/Event
             severity: Clear
           BMC Harddisk Status Warning:
             dsnames: [bmcHarddiskStatus_bmcHarddiskStatus]
-            maxval: '1.9'
-            minval: '2.1'
+            maxval: "1.9"
+            minval: "2.1"
             eventClass: /XFUSION/BMC/Event
             severity: Warning
           BMC Harddisk Status Error:
             dsnames: [bmcHarddiskStatus_bmcHarddiskStatus]
-            maxval: '2.9'
-            minval: '3.1'
+            maxval: "2.9"
+            minval: "3.1"
             eventClass: /XFUSION/BMC/Event
             severity: Error
           BMC Harddisk Status Critical:
             dsnames: [bmcHarddiskStatus_bmcHarddiskStatus]
-            maxval: '3.9'
-            minval: '4.1'
+            maxval: "3.9"
+            minval: "4.1"
             eventClass: /XFUSION/BMC/Event
             severity: Critical
       BMCMemoryDevice:
@@ -569,35 +567,35 @@ device_classes:
             type: SNMP
             datapoints:
               bmcMemoryStatus: {}
-            oid: 1.3.6.1.4.1.2011.2.235.1.1.16.50.1.6       
+            oid: 1.3.6.1.4.1.2011.2.235.1.1.16.50.1.6
         thresholds:
           BMC Memory Status Info1:
             dsnames: [bmcMemoryStatus_bmcMemoryStatus]
-            maxval: '1.1'
-            minval: '0'
+            maxval: "1.1"
+            minval: "0"
             eventClass: /XFUSION/BMC/Event
             severity: Clear
           BMC Memory Status Info2:
             dsnames: [bmcMemoryStatus_bmcMemoryStatus]
-            minval: '4.1'
+            minval: "4.1"
             eventClass: /XFUSION/BMC/Event
             severity: Clear
           BMC Memory Status Warning:
             dsnames: [bmcMemoryStatus_bmcMemoryStatus]
-            maxval: '1.9'
-            minval: '2.1'
+            maxval: "1.9"
+            minval: "2.1"
             eventClass: /XFUSION/BMC/Event
             severity: Warning
           BMC Memory Status Error:
             dsnames: [bmcMemoryStatus_bmcMemoryStatus]
-            maxval: '2.9'
-            minval: '3.1'
+            maxval: "2.9"
+            minval: "3.1"
             eventClass: /XFUSION/BMC/Event
             severity: Error
           BMC Memory Status Critical:
             dsnames: [bmcMemoryStatus_bmcMemoryStatus]
-            maxval: '3.9'
-            minval: '4.1'
+            maxval: "3.9"
+            minval: "4.1"
             eventClass: /XFUSION/BMC/Event
             severity: Critical
       BMCProcessorDevice:
@@ -608,35 +606,35 @@ device_classes:
             type: SNMP
             datapoints:
               bmcProcessorStatus: {}
-            oid: 1.3.6.1.4.1.2011.2.235.1.1.15.50.1.6        
+            oid: 1.3.6.1.4.1.2011.2.235.1.1.15.50.1.6
         thresholds:
           BMC Processor Status Info1:
             dsnames: [bmcProcessorStatus_bmcProcessorStatus]
-            maxval: '1.1'
-            minval: '0'
+            maxval: "1.1"
+            minval: "0"
             eventClass: /XFUSION/BMC/Event
             severity: Clear
           BMC Processor Status Info2:
             dsnames: [bmcProcessorStatus_bmcProcessorStatus]
-            minval: '4.1'
+            minval: "4.1"
             eventClass: /XFUSION/BMC/Event
             severity: Clear
           BMC Processor Status Warning:
             dsnames: [bmcProcessorStatus_bmcProcessorStatus]
-            maxval: '1.9'
-            minval: '2.1'
+            maxval: "1.9"
+            minval: "2.1"
             eventClass: /XFUSION/BMC/Event
             severity: Warning
           BMC Processor Status Error:
             dsnames: [bmcProcessorStatus_bmcProcessorStatus]
-            maxval: '2.9'
-            minval: '3.1'
+            maxval: "2.9"
+            minval: "3.1"
             eventClass: /XFUSION/BMC/Event
             severity: Error
           BMC Processor Status Critical:
             dsnames: [bmcProcessorStatus_bmcProcessorStatus]
-            maxval: '3.9'
-            minval: '4.1'
+            maxval: "3.9"
+            minval: "4.1"
             eventClass: /XFUSION/BMC/Event
             severity: Critical
       BMCPowerSupplyDevice:
@@ -647,35 +645,35 @@ device_classes:
             type: SNMP
             datapoints:
               bmcPowersupplyStatus: {}
-            oid: 1.3.6.1.4.1.2011.2.235.1.1.6.50.1.7        
+            oid: 1.3.6.1.4.1.2011.2.235.1.1.6.50.1.7
         thresholds:
           BMC Powersupply Status Info1:
             dsnames: [bmcPowersupplyStatus_bmcPowersupplyStatus]
-            maxval: '1.1'
-            minval: '0'
+            maxval: "1.1"
+            minval: "0"
             eventClass: /XFUSION/BMC/Event
             severity: Clear
           BMC Powersupply Status Info2:
             dsnames: [bmcPowersupplyStatus_bmcPowersupplyStatus]
-            minval: '4.1'
+            minval: "4.1"
             eventClass: /XFUSION/BMC/Event
             severity: Clear
           BMC Powersupply Status Warning:
             dsnames: [bmcPowersupplyStatus_bmcPowersupplyStatus]
-            maxval: '1.9'
-            minval: '2.1'
+            maxval: "1.9"
+            minval: "2.1"
             eventClass: /XFUSION/BMC/Event
             severity: Warning
           BMC Powersupply Status Error:
             dsnames: [bmcPowersupplyStatus_bmcPowersupplyStatus]
-            maxval: '2.9'
-            minval: '3.1'
+            maxval: "2.9"
+            minval: "3.1"
             eventClass: /XFUSION/BMC/Event
             severity: Error
           BMC Powersupply Status Critical:
             dsnames: [bmcPowersupplyStatus_bmcPowersupplyStatus]
-            maxval: '3.9'
-            minval: '4.1'
+            maxval: "3.9"
+            minval: "4.1"
             eventClass: /XFUSION/BMC/Event
             severity: Critical
 
@@ -700,7 +698,7 @@ device_classes:
         - Device
         - XFUSIONBMC
 
-    templates: 
+    templates:
       XFUSIONBMC:
         description: Monitors metric of Controller
         targetPythonClass: Products.ZenModel.Device
@@ -709,7 +707,7 @@ device_classes:
             type: SNMP
             datapoints:
               presentSystemPower: {}
-            oid: 1.3.6.1.4.1.58132.2.235.1.1.1.13.0        
+            oid: 1.3.6.1.4.1.58132.2.235.1.1.1.13.0
           systemCpuUsage:
             type: SNMP
             datapoints:
@@ -738,7 +736,7 @@ device_classes:
         thresholds:
           High CPU CPUUsage:
             dsnames: [systemCpuUsage_systemCpuUsage]
-            maxval: '90'
+            maxval: "90"
             eventClass: /XFUSION/BMC
             severity: err
         graphs:
@@ -755,21 +753,21 @@ device_classes:
             maxy: 100
             graphpoints:
               systemCpuUsage:
-                dpName: systemCpuUsage_systemCpuUsage             
+                dpName: systemCpuUsage_systemCpuUsage
                 legend: CPUUsage
           PeakPower:
             units: watts
             graphpoints:
               peakPower:
                 dpName: peakPower_peakPower
-                lineType: AREA                
+                lineType: AREA
                 legend: PeakPower
           AveragePower:
             units: watts
             graphpoints:
               averagePower:
                 dpName: averagePower_averagePower
-                lineType: AREA                
+                lineType: AREA
                 legend: AveragePower
           PowerConsumption:
             units: watts
@@ -793,35 +791,35 @@ device_classes:
             type: SNMP
             datapoints:
               bmcFanStatus: {}
-            oid: 1.3.6.1.4.1.58132.2.235.1.1.8.50.1.4        
+            oid: 1.3.6.1.4.1.58132.2.235.1.1.8.50.1.4
         thresholds:
           BMC Fan Status Info1:
             dsnames: [bmcFanStatus_bmcFanStatus]
-            maxval: '1.1'
-            minval: '0'
+            maxval: "1.1"
+            minval: "0"
             eventClass: /XFUSION/BMC/Event
             severity: Clear
           BMC Fan Status Info2:
             dsnames: [bmcFanStatus_bmcFanStatus]
-            minval: '4.1'
+            minval: "4.1"
             eventClass: /XFUSION/BMC/Event
             severity: Clear
           BMC Fan Status Warning:
             dsnames: [bmcFanStatus_bmcFanStatus]
-            maxval: '1.9'
-            minval: '2.1'
+            maxval: "1.9"
+            minval: "2.1"
             eventClass: /XFUSION/BMC/Event
             severity: Warning
           BMC Fan Status Error:
             dsnames: [bmcFanStatus_bmcFanStatus]
-            maxval: '2.9'
-            minval: '3.1'
+            maxval: "2.9"
+            minval: "3.1"
             eventClass: /XFUSION/BMC/Event
             severity: Error
           BMC Fan Status Critical:
             dsnames: [bmcFanStatus_bmcFanStatus]
-            maxval: '3.9'
-            minval: '4.1'
+            maxval: "3.9"
+            minval: "4.1"
             eventClass: /XFUSION/BMC/Event
             severity: Critical
       BMCHarddiskDevice:
@@ -832,35 +830,35 @@ device_classes:
             type: SNMP
             datapoints:
               bmcHarddiskStatus: {}
-            oid: 1.3.6.1.4.1.58132.2.235.1.1.18.50.1.3        
+            oid: 1.3.6.1.4.1.58132.2.235.1.1.18.50.1.3
         thresholds:
           BMC Harddisk Status Info1:
             dsnames: [bmcHarddiskStatus_bmcHarddiskStatus]
-            maxval: '1.1'
-            minval: '0'
+            maxval: "1.1"
+            minval: "0"
             eventClass: /XFUSION/BMC/Event
             severity: Clear
           BMC Harddisk Status Info2:
             dsnames: [bmcHarddiskStatus_bmcHarddiskStatus]
-            minval: '4.1'
+            minval: "4.1"
             eventClass: /XFUSION/BMC/Event
             severity: Clear
           BMC Harddisk Status Warning:
             dsnames: [bmcHarddiskStatus_bmcHarddiskStatus]
-            maxval: '1.9'
-            minval: '2.1'
+            maxval: "1.9"
+            minval: "2.1"
             eventClass: /XFUSION/BMC/Event
             severity: Warning
           BMC Harddisk Status Error:
             dsnames: [bmcHarddiskStatus_bmcHarddiskStatus]
-            maxval: '2.9'
-            minval: '3.1'
+            maxval: "2.9"
+            minval: "3.1"
             eventClass: /XFUSION/BMC/Event
             severity: Error
           BMC Harddisk Status Critical:
             dsnames: [bmcHarddiskStatus_bmcHarddiskStatus]
-            maxval: '3.9'
-            minval: '4.1'
+            maxval: "3.9"
+            minval: "4.1"
             eventClass: /XFUSION/BMC/Event
             severity: Critical
       BMCMemoryDevice:
@@ -871,35 +869,35 @@ device_classes:
             type: SNMP
             datapoints:
               bmcMemoryStatus: {}
-            oid: 1.3.6.1.4.1.58132.2.235.1.1.16.50.1.6       
+            oid: 1.3.6.1.4.1.58132.2.235.1.1.16.50.1.6
         thresholds:
           BMC Memory Status Info1:
             dsnames: [bmcMemoryStatus_bmcMemoryStatus]
-            maxval: '1.1'
-            minval: '0'
+            maxval: "1.1"
+            minval: "0"
             eventClass: /XFUSION/BMC/Event
             severity: Clear
           BMC Memory Status Info2:
             dsnames: [bmcMemoryStatus_bmcMemoryStatus]
-            minval: '4.1'
+            minval: "4.1"
             eventClass: /XFUSION/BMC/Event
             severity: Clear
           BMC Memory Status Warning:
             dsnames: [bmcMemoryStatus_bmcMemoryStatus]
-            maxval: '1.9'
-            minval: '2.1'
+            maxval: "1.9"
+            minval: "2.1"
             eventClass: /XFUSION/BMC/Event
             severity: Warning
           BMC Memory Status Error:
             dsnames: [bmcMemoryStatus_bmcMemoryStatus]
-            maxval: '2.9'
-            minval: '3.1'
+            maxval: "2.9"
+            minval: "3.1"
             eventClass: /XFUSION/BMC/Event
             severity: Error
           BMC Memory Status Critical:
             dsnames: [bmcMemoryStatus_bmcMemoryStatus]
-            maxval: '3.9'
-            minval: '4.1'
+            maxval: "3.9"
+            minval: "4.1"
             eventClass: /XFUSION/BMC/Event
             severity: Critical
       BMCProcessorDevice:
@@ -910,35 +908,35 @@ device_classes:
             type: SNMP
             datapoints:
               bmcProcessorStatus: {}
-            oid: 1.3.6.1.4.1.58132.2.235.1.1.15.50.1.6        
+            oid: 1.3.6.1.4.1.58132.2.235.1.1.15.50.1.6
         thresholds:
           BMC Processor Status Info1:
             dsnames: [bmcProcessorStatus_bmcProcessorStatus]
-            maxval: '1.1'
-            minval: '0'
+            maxval: "1.1"
+            minval: "0"
             eventClass: /XFUSION/BMC/Event
             severity: Clear
           BMC Processor Status Info2:
             dsnames: [bmcProcessorStatus_bmcProcessorStatus]
-            minval: '4.1'
+            minval: "4.1"
             eventClass: /XFUSION/BMC/Event
             severity: Clear
           BMC Processor Status Warning:
             dsnames: [bmcProcessorStatus_bmcProcessorStatus]
-            maxval: '1.9'
-            minval: '2.1'
+            maxval: "1.9"
+            minval: "2.1"
             eventClass: /XFUSION/BMC/Event
             severity: Warning
           BMC Processor Status Error:
             dsnames: [bmcProcessorStatus_bmcProcessorStatus]
-            maxval: '2.9'
-            minval: '3.1'
+            maxval: "2.9"
+            minval: "3.1"
             eventClass: /XFUSION/BMC/Event
             severity: Error
           BMC Processor Status Critical:
             dsnames: [bmcProcessorStatus_bmcProcessorStatus]
-            maxval: '3.9'
-            minval: '4.1'
+            maxval: "3.9"
+            minval: "4.1"
             eventClass: /XFUSION/BMC/Event
             severity: Critical
       BMCPowerSupplyDevice:
@@ -949,41 +947,40 @@ device_classes:
             type: SNMP
             datapoints:
               bmcPowersupplyStatus: {}
-            oid: 1.3.6.1.4.1.58132.2.235.1.1.6.50.1.7        
+            oid: 1.3.6.1.4.1.58132.2.235.1.1.6.50.1.7
         thresholds:
           BMC Powersupply Status Info1:
             dsnames: [bmcPowersupplyStatus_bmcPowersupplyStatus]
-            maxval: '1.1'
-            minval: '0'
+            maxval: "1.1"
+            minval: "0"
             eventClass: /XFUSION/BMC/Event
             severity: Clear
           BMC Powersupply Status Info2:
             dsnames: [bmcPowersupplyStatus_bmcPowersupplyStatus]
-            minval: '4.1'
+            minval: "4.1"
             eventClass: /XFUSION/BMC/Event
             severity: Clear
           BMC Powersupply Status Warning:
             dsnames: [bmcPowersupplyStatus_bmcPowersupplyStatus]
-            maxval: '1.9'
-            minval: '2.1'
+            maxval: "1.9"
+            minval: "2.1"
             eventClass: /XFUSION/BMC/Event
             severity: Warning
           BMC Powersupply Status Error:
             dsnames: [bmcPowersupplyStatus_bmcPowersupplyStatus]
-            maxval: '2.9'
-            minval: '3.1'
+            maxval: "2.9"
+            minval: "3.1"
             eventClass: /XFUSION/BMC/Event
             severity: Error
           BMC Powersupply Status Critical:
             dsnames: [bmcPowersupplyStatus_bmcPowersupplyStatus]
-            maxval: '3.9'
-            minval: '4.1'
+            maxval: "3.9"
+            minval: "4.1"
             eventClass: /XFUSION/BMC/Event
             severity: Critical
 
-
   /Server/XFUSION/HMM:
-    remove: true  
+    remove: true
     zProperties:
       zPythonClass: ZenPacks.community.xFusionServer.xFusionServerDevice
       zCollectorPlugins:
@@ -1488,31 +1485,31 @@ device_classes:
         thresholds:
           HMM Blade Status Info1:
             dsnames: [hmmBladeStatus_hmmBladeStatus]
-            maxval: '0.1'
-            minval: '0'
+            maxval: "0.1"
+            minval: "0"
             eventClass: /XFUSION/HMM/Event
             severity: Clear
           HMM Blade Status Info2:
             dsnames: [hmmBladeStatus_hmmBladeStatus]
-            minval: '7.1'
+            minval: "7.1"
             eventClass: /XFUSION/HMM/Event
             severity: Clear
           HMM Blade Status Warning:
             dsnames: [hmmBladeStatus_hmmBladeStatus]
-            maxval: '1.9'
-            minval: '3.1'
+            maxval: "1.9"
+            minval: "3.1"
             eventClass: /XFUSION/HMM/Event
             severity: Warning
           HMM Blade Status Error:
             dsnames: [hmmBladeStatus_hmmBladeStatus]
-            maxval: '2.9'
-            minval: '3.1'
+            maxval: "2.9"
+            minval: "3.1"
             eventClass: /XFUSION/HMM/Event
             severity: Error
           HMM Blade Status Critical:
             dsnames: [hmmBladeStatus_hmmBladeStatus]
-            maxval: '3.9'
-            minval: '4.1'
+            maxval: "3.9"
+            minval: "4.1"
             eventClass: /XFUSION/HMM/Event
             severity: Critical
 
@@ -1524,35 +1521,35 @@ device_classes:
             type: SNMP
             datapoints:
               hmmChassisStatus: {}
-            oid: 1.3.6.1.4.1.2011.2.82.1.82.2.5.0  
+            oid: 1.3.6.1.4.1.2011.2.82.1.82.2.5.0
         thresholds:
           HMM Chassis Status Info1:
             dsnames: [hmmChassisStatus_hmmChassisStatus]
-            maxval: '0.9'
-            minval: '0'
+            maxval: "0.9"
+            minval: "0"
             eventClass: /XFUSION/HMM/Event
             severity: Clear
           HMM Chassis Status Info2:
             dsnames: [hmmChassisStatus_hmmChassisStatus]
-            minval: '7.1'
+            minval: "7.1"
             eventClass: /XFUSION/HMM/Event
             severity: Clear
           HMM Chassis Status Warning:
             dsnames: [hmmChassisStatus_hmmChassisStatus]
-            maxval: '0.9'
-            minval: '1.1'
+            maxval: "0.9"
+            minval: "1.1"
             eventClass: /XFUSION/HMM/Event
             severity: Warning
           HMM Chassis Status Error:
             dsnames: [hmmChassisStatus_hmmChassisStatus]
-            maxval: '1.9'
-            minval: '3.1'
+            maxval: "1.9"
+            minval: "3.1"
             eventClass: /XFUSION/HMM/Event
             severity: Error
           HMM Chassis Status Critical:
             dsnames: [hmmChassisStatus_hmmChassisStatus]
-            maxval: '3.9'
-            minval: '7.1'
+            maxval: "3.9"
+            minval: "7.1"
             eventClass: /XFUSION/HMM/Event
             severity: Critical
       HMMFanDevice:
@@ -1567,31 +1564,31 @@ device_classes:
         thresholds:
           HMM Fan Status Info1:
             dsnames: [hmmFanStatus_hmmFanStatus]
-            maxval: '1.1'
-            minval: '0'
+            maxval: "1.1"
+            minval: "0"
             eventClass: /XFUSION/HMM/Event
             severity: Clear
           HMM Fan Status Info2:
             dsnames: [hmmFanStatus_hmmFanStatus]
-            minval: '4.1'
+            minval: "4.1"
             eventClass: /XFUSION/HMM/Event
             severity: Clear
           HMM Fan Status Warning:
             dsnames: [hmmFanStatus_hmmFanStatus]
-            maxval: '1.9'
-            minval: '2.1'
+            maxval: "1.9"
+            minval: "2.1"
             eventClass: /XFUSION/HMM/Event
             severity: Warning
           HMM Fan Status Error:
             dsnames: [hmmFanStatus_hmmFanStatus]
-            maxval: '2.9'
-            minval: '3.1'
+            maxval: "2.9"
+            minval: "3.1"
             eventClass: /XFUSION/HMM/Event
             severity: Error
           HMM Fan Status Critical:
             dsnames: [hmmFanStatus_hmmFanStatus]
-            maxval: '3.9'
-            minval: '4.1'
+            maxval: "3.9"
+            minval: "4.1"
             eventClass: /XFUSION/HMM/Event
             severity: Critical
       HMMPowerSupplyDevice:
@@ -1606,31 +1603,31 @@ device_classes:
         thresholds:
           HMM Powersupply Status Info1:
             dsnames: [hmmPowersupplyStatus_hmmPowersupplyStatus]
-            maxval: '1.1'
-            minval: '0'
+            maxval: "1.1"
+            minval: "0"
             eventClass: /XFUSION/HMM/Event
             severity: Clear
           HMM Powersupply Status Info2:
             dsnames: [hmmPowersupplyStatus_hmmPowersupplyStatus]
-            minval: '4.1'
+            minval: "4.1"
             eventClass: /XFUSION/HMM/Event
             severity: Clear
           HMM Powersupply Status Warning:
             dsnames: [hmmPowersupplyStatus_hmmPowersupplyStatus]
-            maxval: '1.9'
-            minval: '2.1'
+            maxval: "1.9"
+            minval: "2.1"
             eventClass: /XFUSION/HMM/Event
             severity: Warning
           HMM Powersupply Status Error:
             dsnames: [hmmPowersupplyStatus_hmmPowersupplyStatus]
-            maxval: '2.9'
-            minval: '3.1'
+            maxval: "2.9"
+            minval: "3.1"
             eventClass: /XFUSION/HMM/Event
             severity: Error
           HMM Powersupply Status Critical:
             dsnames: [hmmPowersupplyStatus_hmmPowersupplyStatus]
-            maxval: '3.9'
-            minval: '4.1'
+            maxval: "3.9"
+            minval: "4.1"
             eventClass: /XFUSION/HMM/Event
             severity: Critical
       HMMManagementBoardDevice:
@@ -1645,30 +1642,30 @@ device_classes:
         thresholds:
           HMM ManagementBoard Status Info1:
             dsnames: [hmmManagementBoardStatus_hmmManagementBoardStatus]
-            maxval: '0.9'
-            minval: '0'
+            maxval: "0.9"
+            minval: "0"
             eventClass: /XFUSION/HMM/Event
             severity: Clear
           HMM ManagementBoard Status Info2:
             dsnames: [hmmManagementBoardStatus_hmmManagementBoardStatus]
-            minval: '7.1'
+            minval: "7.1"
             eventClass: /XFUSION/HMM/Event
             severity: Clear
           HMM ManagementBoard Status Warning:
             dsnames: [hmmManagementBoardStatus_hmmManagementBoardStatus]
-            maxval: '0.9'
-            minval: '1.1'
+            maxval: "0.9"
+            minval: "1.1"
             eventClass: /XFUSION/HMM/Event
             severity: Warning
           HMM ManagementBoard Status Error:
             dsnames: [hmmManagementBoardStatus_hmmManagementBoardStatus]
-            maxval: '1.9'
-            minval: '3.1'
+            maxval: "1.9"
+            minval: "3.1"
             eventClass: /XFUSION/HMM/Event
             severity: Error
           HMM ManagementBoard Status Critical:
             dsnames: [hmmManagementBoardStatus_hmmManagementBoardStatus]
-            maxval: '3.9'
-            minval: '7.1'
+            maxval: "3.9"
+            minval: "7.1"
             eventClass: /XFUSION/HMM/Event
             severity: Critical

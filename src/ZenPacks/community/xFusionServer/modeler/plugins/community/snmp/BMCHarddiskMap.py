@@ -1,16 +1,16 @@
-'''
+"""
 BMCHarddiskMap
-'''
+"""
 from Products.DataCollector.plugins.CollectorPlugin import (
     SnmpPlugin, GetTableMap,
-    )
+)
 from DeviceDefine import BMCSTATUS, BMCPRESENCE
 
 
 class BMCHarddiskMap(SnmpPlugin):
-    '''
+    """
     BMCHarddiskMap
-    '''
+    """
 
     relname = 'bmcharddisks'
     modname = 'ZenPacks.community.xFusionServer.BMCHarddisk'
@@ -23,14 +23,14 @@ class BMCHarddiskMap(SnmpPlugin):
                 '.3': 'hardDiskStatus',
                 '.4': 'hardDiskLocation',
                 '.6': 'hardDiskDevicename',
-                }
-            ),
-        )
+            }
+        ),
+    )
 
     def process(self, device, results, log):
-        '''
+        """
         process oid
-        '''
+        """
 
         log = log
         device = device
@@ -38,7 +38,7 @@ class BMCHarddiskMap(SnmpPlugin):
 
         relmap = self.relMap()
         for snmpindex, row in temp_sensors.items():
-            name = 'HDD_' + str(row.get('hardDiskIndex'))
+            name = 'HDD_%s' % str(row.get('hardDiskIndex'))
             if not name:
                 log.warn('Skipping temperature sensor with no name')
                 continue
@@ -52,6 +52,6 @@ class BMCHarddiskMap(SnmpPlugin):
                 'presence': BMCPRESENCE.get(row.get('hardDiskPresence'),
                                             'unknown'),
                 'status': BMCSTATUS.get(row.get('hardDiskStatus'), 'unknown')
-                }))
+            }))
 
         return relmap

@@ -1,3 +1,3 @@
-from . import zenpacklib
+import zenpacklib
 
 zenpacklib.load_yaml()

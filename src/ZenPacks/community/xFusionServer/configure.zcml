@@ -11,10 +11,10 @@
     <!-- Import directRouter Directive -->
     <include package="Products.ZenUtils.extdirect.zope" file="meta.zcml"/>
 
-    <browser:directRouter name="myApp_router_xfusion" for="*" class=".routers.bmcRouter" namespace="Zenoss.remote" /> 
+    <browser:directRouter name="myApp_router_xfusion" for="*" class=".routers.BmcRouter" namespace="Zenoss.remote" /> 
     <adapter name="BMCAdapter" provides=".interfaces.IBMCFacade" for="*" factory=".facades.BMCFacade" /> 
     
-    <browser:directRouter name="hmm_router_xfusion" for="*" class=".routers.hmmRouter" namespace="Zenoss.remote" />
+    <browser:directRouter name="hmm_router_xfusion" for="*" class=".routers.HmmRouter" namespace="Zenoss.remote" />
     <adapter name="HMMAdapter" provides=".interfaces.IHMMFacade" for="*" factory=".facades.HMMFacade" />
     
 <!--

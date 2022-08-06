@@ -1,16 +1,16 @@
-'''
+"""
 HMMSystemMap
-'''
+"""
 from Products.DataCollector.plugins.CollectorPlugin import (
     SnmpPlugin, GetMap
-    )
+)
 from DeviceDefine import HMMPRESENCE, HMMHEALTH
 
 
 class HMMManagementBoardMap(SnmpPlugin):
-    '''
+    """
     HMMSystemMap
-    '''
+    """
     relname = 'hmmmanagementBoards'
     modname = 'ZenPacks.community.xFusionServer.HMMManagementBoard'
     snmpGetMap = GetMap({
@@ -19,12 +19,12 @@ class HMMManagementBoardMap(SnmpPlugin):
         '.1.3.6.1.4.1.58132.2.82.1.82.3.9.0': 'smmHealth',
         '.1.3.6.1.4.1.58132.2.82.1.82.3.49.0': 'smmHostname',
         '.1.3.6.1.4.1.58132.2.82.1.82.3.74.0': 'smmProductName',
-        })
+    })
 
     def process(self, device, results, log):
-        '''
+        """
         process oid
-        '''
+        """
 
         log = log
         device = device
@@ -39,13 +39,13 @@ class HMMManagementBoardMap(SnmpPlugin):
 
         for idx in verstrlist:
             if idx.find('Uboot    Version :') != -1:
-                ubootversion = idx[idx.find('Uboot    Version :')+18:]
+                ubootversion = idx[idx.find('Uboot    Version :') + 18:]
             if idx.find('CPLD     Version :') != -1:
-                cpldversion = idx[idx.find('CPLD     Version :')+18:]
+                cpldversion = idx[idx.find('CPLD     Version :') + 18:]
             if idx.find('FPGA     Version :') != -1:
-                fpgaversion = idx[idx.find('FPGA     Version :')+18:]
+                fpgaversion = idx[idx.find('FPGA     Version :') + 18:]
             if idx.find('Software Version :') != -1:
-                softwareversion = idx[idx.find('Software Version :')+18:]
+                softwareversion = idx[idx.find('Software Version :') + 18:]
         relmap = self.relMap()
         relmap.append(self.objectMap({
             'id': self.prepId('SMM_1'),
@@ -59,5 +59,5 @@ class HMMManagementBoardMap(SnmpPlugin):
                                           'unknown'),
             'hsHostname': getdata.get('smmHostname'),
             'hsHealth': HMMHEALTH.get(getdata.get('smmHealth'), 'unknown'),
-            }))
+        }))
         return relmap

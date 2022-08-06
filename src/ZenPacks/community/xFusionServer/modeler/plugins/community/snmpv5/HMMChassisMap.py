@@ -1,16 +1,16 @@
-'''
+"""
 HMMChassisMap
-'''
+"""
 from Products.DataCollector.plugins.CollectorPlugin import (
     SnmpPlugin, GetMap
-    )
+)
 from DeviceDefine import HMMHEALTH, HMMPCE
 
 
 class HMMChassisMap(SnmpPlugin):
-    '''
+    """
     HMMChassisMap
-    '''
+    """
 
     relname = 'hmmchassiss'
     modname = 'ZenPacks.community.xFusionServer.HMMChassis'
@@ -23,12 +23,12 @@ class HMMChassisMap(SnmpPlugin):
         '.1.3.6.1.4.1.2011.2.82.1.82.2.15.0': 'shelfPowerCapping',
         '.1.3.6.1.4.1.2011.2.82.1.82.2.18.0': 'shelfChassisName',
         '.1.3.6.1.4.1.2011.2.82.1.82.2.2001.1.16.0': 'shelfType',
-        })
+    })
 
     def process(self, device, results, log):
-        '''
+        """
         process oid
-        '''
+        """
 
         log = log
         device = device
@@ -46,5 +46,5 @@ class HMMChassisMap(SnmpPlugin):
                 HMMPCE.get(getdata.get('shelfPowerCappingEnable'), 'unknown'),
             'hcpowerCappingValue': getdata.get('shelfPowerCapping'),
             'hctype': getdata.get('shelfType'),
-            }))
+        }))
         return relmap

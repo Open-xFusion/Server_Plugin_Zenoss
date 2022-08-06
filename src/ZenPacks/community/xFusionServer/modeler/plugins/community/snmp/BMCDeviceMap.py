@@ -1,16 +1,16 @@
-'''
+"""
 BMCDeviceMap
-'''
+"""
 from Products.DataCollector.plugins.CollectorPlugin import (
     SnmpPlugin, GetTableMap, GetMap
-    )
+)
 from DeviceDefine import BMCBOOTSTR, BMCFPCSTR
 
 
 class BMCDeviceMap(SnmpPlugin):
-    '''
+    """
     BMCDeviceMap
-    '''
+    """
 
     snmpGetTableMap = (
         GetTableMap(
@@ -27,12 +27,12 @@ class BMCDeviceMap(SnmpPlugin):
         '.1.3.6.1.4.1.58132.2.235.1.1.1.2.0': 'systemBootsequence',
         '.1.3.6.1.4.1.58132.2.235.1.1.1.12.0': 'fruPowerControl',
         '.1.3.6.1.4.1.58132.2.235.1.1.10.50.1.4.9.77.97.105.110.98.111.97.114.100': 'boardId',
-        })
+    })
 
     def process(self, device, results, log):
-        '''
+        """
         process oid
-        '''
+        """
 
         log = log
         device = device
@@ -47,4 +47,4 @@ class BMCDeviceMap(SnmpPlugin):
             'bmcFRUControl': BMCFPCSTR.get(
                 getdata.get('fruPowerControl')),
             'setHWSerialNumber': getdata.get('fruBoardSerialNumber'),
-            })
+        })

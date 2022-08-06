@@ -1,24 +1,17 @@
-'''
-BMC HMM Router
-'''
+"""
+功 能：该类主要涉及BMC,HMM路由相关配置
+版权信息：超聚变数字技术有限公司，版本所有(C) 2017-2022
+"""
+from collections import namedtuple
+
 from Products.ZenUtils.Ext import DirectRouter, DirectResponse
 from Products import Zuul
 
 
-class bmcRouter(DirectRouter):
-    '''
+class BmcRouter(DirectRouter):
+    """
     BMC Router
-    '''
-
-    def _getFacade(self):
-        '''
-        getfacade
-        '''
-
-        # The parameter in the next line - myAppAdapter - must match with
-        #   the name field in an adapter stanza in configure.zcml
-
-        return Zuul.getFacade('BMCAdapter', self.context)
+    """
 
     # The method name - myRouterFunc - and its parameters - must match with
     #   the last part of the call for Zenoss.remote.myAppRouter.myRouterFunc
@@ -30,9 +23,9 @@ class bmcRouter(DirectRouter):
     #  values of these fields were provided by the form input.
 
     def routerbs(self, deviceip, bootsequence, cfgboottype):
-        '''
+        """
         routerBS
-        '''
+        """
         facade = self._getFacade()
 
         # The object that is being operated on is in self.context
@@ -47,9 +40,9 @@ class bmcRouter(DirectRouter):
         return DirectResponse.fail(message)
 
     def routerfpc(self, deviceip, frupowercontrol):
-        '''
+        """
         routerFPC
-        '''
+        """
         facade = self._getFacade()
 
         devobject = self.context
@@ -62,31 +55,35 @@ class bmcRouter(DirectRouter):
             return DirectResponse.succeed(message)
         return DirectResponse.fail(message)
 
-
-class hmmRouter(DirectRouter):
-    '''
-    HMM Router
-    '''
-
     def _getFacade(self):
-        '''
+        """
         getfacade
-        '''
-        return Zuul.getFacade('HMMAdapter', self.context)
+        """
+
+        # The parameter in the next line - myAppAdapter - must match with
+        #   the name field in an adapter stanza in configure.zcml
+
+        return Zuul.getFacade('BMCAdapter', self.context)
+
+
+class HmmRouter(DirectRouter):
+    """
+    HMM Router
+    """
 
     def routerbbo(self, deviceip, hmmbladenum,
                   hmmbiosbootoption, hmmbotype):
-        '''
+        """
         routerBBO
-        '''
+        """
         facade = self._getFacade()
 
         # The object that is being operated on is in self.context
         devobject = self.context
+        hmm_args = namedtuple('hmm_args', ['hmmbladenum', 'hmmbbo', 'hmmbotype'])
+        hmm_info = hmm_args._make([hmmbladenum, hmmbiosbootoption, hmmbotype])
 
-        success, message = facade.biosbootoption(devobject, deviceip, hmmbladenum,
-                                                 hmmbiosbootoption,
-                                                 hmmbotype)
+        success, message = facade.biosbootoption(devobject, deviceip, hmm_info)
 
         if success:
             return DirectResponse.succeed(message)
@@ -94,20 +91,22 @@ class hmmRouter(DirectRouter):
         return DirectResponse.fail(message)
 
     def routerfrucontrol(self, deviceip, hmmbladenum, hmmfrucontrol):
-        '''
+        """
         routerFruControl
-        '''
-        hmmallblade = False
+        """
         facade = self._getFacade()
 
         devobject = self.context
 
-        hmmfrunum = 1
-        success, message = facade.frucontrol(devobject, deviceip, hmmbladenum,
-                                             hmmfrunum, hmmfrucontrol,
-                                             hmmallblade)
-
+        success, message = facade.frucontrol(devobject, deviceip,
+                                             hmmbladenum, hmmfrucontrol)
         if success:
             return DirectResponse.succeed(message)
 
         return DirectResponse.fail(message)
+
+    def _getFacade(self):
+        """
+        getfacade
+        """
+        return Zuul.getFacade('HMMAdapter', self.context)

@@ -1,16 +1,16 @@
-'''
+"""
 BMCPowerSupplyMap
-'''
+"""
 from Products.DataCollector.plugins.CollectorPlugin import (
     SnmpPlugin, GetTableMap,
-    )
+)
 from DeviceDefine import BMCSTATUS, BMCPRESENCE
 
 
 class BMCPowerSupplyMap(SnmpPlugin):
-    '''
+    """
     BMCPowerSupplyMap
-    '''
+    """
 
     relname = 'bmcpowerSupplys'
     modname = 'ZenPacks.community.xFusionServer.BMCPowerSupply'
@@ -27,14 +27,14 @@ class BMCPowerSupplyMap(SnmpPlugin):
                 '.9': 'powerSupplyPresence',
                 '.11': 'powerSupplyLocation',
                 '.13': 'powerSupplyDevicename',
-                }
-            ),
-        )
+            }
+        ),
+    )
 
     def process(self, device, results, log):
-        '''
+        """
         process oid
-        '''
+        """
 
         log = log
         device = device
@@ -42,7 +42,7 @@ class BMCPowerSupplyMap(SnmpPlugin):
 
         relmap = self.relMap()
         for snmpindex, row in temp_sensors.items():
-            name = 'PS_' + str(row.get('powerSupplyIndex'))
+            name = 'PS_%s' % str(row.get('powerSupplyIndex'))
             if not name:
                 log.warn('Skipping temperature sensor with no name')
                 continue
@@ -61,7 +61,7 @@ class BMCPowerSupplyMap(SnmpPlugin):
                 'manufacturer': row.get('powerSupplymanufacture'),
                 'model': row.get('powerSupplyModel'),
                 'powerRating': str(row.get('powerSupplyPowerRating')) + '(Watts)',
-                'inputPower': str(row.get('powerSupplyInputPower'))+'(Watts)',
-                }))
+                'inputPower': str(row.get('powerSupplyInputPower')) + '(Watts)',
+            }))
 
         return relmap
