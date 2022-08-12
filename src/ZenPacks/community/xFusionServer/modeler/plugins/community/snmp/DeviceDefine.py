@@ -1,6 +1,6 @@
-'''
+"""
 SNMP Device Defines
-'''
+"""
 
 BMCSTATUS = {
     1: 'ok',

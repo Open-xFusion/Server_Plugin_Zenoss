@@ -1,16 +1,16 @@
-'''
+"""
 BMCFanMap
-'''
+"""
 from Products.DataCollector.plugins.CollectorPlugin import (
     SnmpPlugin, GetTableMap,
-    )
+)
 from DeviceDefine import BMCSTATUS, BMCPRESENCE
 
 
 class BMCFanMap(SnmpPlugin):
-    '''
+    """
     BMCFanMap
-    '''
+    """
 
     relname = 'bmcfans'
     modname = 'ZenPacks.community.xFusionServer.BMCFan'
@@ -24,14 +24,14 @@ class BMCFanMap(SnmpPlugin):
                 '.4': 'fanStatus',
                 '.5': 'fanLocation',
                 '.7': 'fanDevicename',
-                }
-            ),
-        )
+            }
+        ),
+    )
 
     def process(self, device, results, log):
-        '''
+        """
         process oid
-        '''
+        """
 
         log = log
         device = device
@@ -40,7 +40,7 @@ class BMCFanMap(SnmpPlugin):
 
         relmap = self.relMap()
         for snmpindex, row in temp_sensors.items():
-            name = 'Fan_' + str(row.get('fanIndex'))
+            name = 'Fan_%s' % str(row.get('fanIndex'))
             if not name:
                 log.warn('Skipping temperature sensor with no name')
                 continue
@@ -54,6 +54,6 @@ class BMCFanMap(SnmpPlugin):
                 'status': BMCSTATUS.get(row.get('fanStatus'), 'unknown'),
                 'speed': row.get('fanSpeed'),
                 'presence': BMCPRESENCE.get(row.get('fanPresence'), 'unknown')
-                }))
+            }))
 
         return relmap

@@ -1,16 +1,16 @@
-'''
+"""
 HMMPowerSupplyMap
-'''
+"""
 from Products.DataCollector.plugins.CollectorPlugin import (
     SnmpPlugin, GetTableMap, GetMap
-    )
+)
 from DeviceDefine import HMMSTATUS, HMMPRESENCE, HMMPOWERMODE, HMMLOCATION
 
 
 class HMMPowerSupplyMap(SnmpPlugin):
-    '''
+    """
     HMMPowerSupplyMap
-    '''
+    """
     relname = 'hmmpowerSupplys'
     modname = 'ZenPacks.community.xFusionServer.HMMPowerSupply'
 
@@ -23,16 +23,16 @@ class HMMPowerSupplyMap(SnmpPlugin):
                 '.4': 'powerRatingPower',
                 '.5': 'powerMode',
                 '.8': 'powerRuntimePower',
-                }
-            ),
+            }
+        ),
         GetTableMap(
             'hmmPSUTable', '1.3.6.1.4.1.2011.2.82.1.82.100.4.2001.1', {
                 '.1': 'psuIndex',
                 '.2': 'psuLocation',
                 '.3': 'psuHealth',
-                }
-            ),
-        )
+            }
+        ),
+    )
     snmpGetMap = GetMap({
         '.1.3.6.1.4.1.2011.2.82.1.82.100.4.2001.1.1.1': 'psuIndex1',
         '.1.3.6.1.4.1.2011.2.82.1.82.100.4.2001.1.2.1': 'psuLocation1',
@@ -52,12 +52,12 @@ class HMMPowerSupplyMap(SnmpPlugin):
         '.1.3.6.1.4.1.2011.2.82.1.82.100.4.2001.1.1.6': 'psuIndex6',
         '.1.3.6.1.4.1.2011.2.82.1.82.100.4.2001.1.2.6': 'psuLocation6',
         '.1.3.6.1.4.1.2011.2.82.1.82.100.4.2001.1.3.6': 'psuHealth6',
-        })
+    })
 
     def process(self, device, results, log):
-        '''
+        """
         process oid
-        '''
+        """
 
         log = log
         device = device
@@ -67,9 +67,9 @@ class HMMPowerSupplyMap(SnmpPlugin):
         psumap = {}
 
         for row in range(1, 7):
-            rindex = 'psuIndex'+str(row)
-            rlocation = 'psuLocation'+str(row)
-            rhealth = 'psuHealth'+str(row)
+            rindex = 'psuIndex%s' % str(row)
+            rlocation = 'psuLocation%s' % str(row)
+            rhealth = 'psuHealth%s' % str(row)
             psumap[row] = [HMMLOCATION.get(getdata.get(rlocation), ''),
                            HMMSTATUS.get(getdata.get(rhealth), 'normal')]
 
@@ -85,14 +85,14 @@ class HMMPowerSupplyMap(SnmpPlugin):
             psustatus = ''
             psulocation = ''
             # 2018-01-12 djg fixed psu[1... and powersuperly[0... in same row.
-            psuidx = int(name)+1
+            psuidx = int(name) + 1
             if (psuidx) in psumap:
-                psulocation = psumap[psuidx][0]
-                psustatus = psumap[psuidx][1]
+                psulocation = psumap.get(psuidx)[0]
+                psustatus = psumap.get(psuidx)[1]
 
             relmap.append(self.objectMap({
-                'id': self.prepId('PS_'+name),
-                'title': 'PS_'+name,
+                'id': self.prepId('PS_' + name),
+                'title': 'PS_' + name,
                 'snmpindex': snmpindex.strip('.'),
                 'hpspresence': HMMPRESENCE.get(row.get('powerPresence'),
                                                'unknown'),
@@ -102,6 +102,6 @@ class HMMPowerSupplyMap(SnmpPlugin):
                 'hpslocation': psulocation,
                 'hpspowerMode': HMMPOWERMODE.get(
                     row.get('powerMode'), row.get('powerMode')),
-                }))
+            }))
 
         return relmap

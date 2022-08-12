@@ -1,16 +1,16 @@
-'''
+"""
 BMCProcessorMap
-'''
+"""
 from Products.DataCollector.plugins.CollectorPlugin import (
     SnmpPlugin, GetTableMap,
-    )
+)
 from DeviceDefine import BMCSTATUS
 
 
 class BMCProcessorMap(SnmpPlugin):
-    '''
+    """
     BMCProcessorMap
-    '''
+    """
 
     relname = 'bmcprocessors'
     modname = 'ZenPacks.community.xFusionServer.BMCProcessor'
@@ -28,14 +28,14 @@ class BMCProcessorMap(SnmpPlugin):
                 '.10': 'cpuDevicename',
                 '.12': 'cpuCoreCount',
                 '.13': 'cpuThreadCount',
-                }
-            ),
-        )
+            }
+        ),
+    )
 
     def process(self, device, results, log):
-        '''
+        """
         process oid
-        '''
+        """
 
         log = log
         device = device
@@ -43,7 +43,7 @@ class BMCProcessorMap(SnmpPlugin):
 
         relmap = self.relMap()
         for snmpindex, row in temp_sensors.items():
-            name = 'CPU_' + str(row.get('cpuIndex'))
+            name = 'CPU_%s' % str(row.get('cpuIndex'))
 
             status = int(row.get('cpuStatus'))
             if status == 5:
@@ -61,6 +61,6 @@ class BMCProcessorMap(SnmpPlugin):
                 'status': BMCSTATUS.get(row.get('cpuStatus'), 'unknown'),
                 'coreCount': row.get('cpuCoreCount'),
                 'threadCount': row.get('cpuThreadCount'),
-                }))
+            }))
 
         return relmap

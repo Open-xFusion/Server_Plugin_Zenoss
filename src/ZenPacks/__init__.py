@@ -1,1 +1,3 @@
-__import__('pkg_resources').declare_namespace(__name__)
+import importlib
+
+importlib.import_module('pkg_resources').declare_namespace(__name__)

@@ -1,27 +1,33 @@
-'''# -*- coding: utf-8 -*-
-web router facades
-'''
+# -*- coding: utf-8 -*-
+"""
+功 能：Facade类，该类主要涉及配置OS上下电,设置启动顺序功能
+版权信息：超聚变数字技术有限公司，版本所有(C) 2017-2022
+"""
 import os
+import logging
+from collections import namedtuple
 from zope.interface import implements
 from Products.Zuul.facades import ZuulFacade
 from Products.Zuul.utils import ZuulMessageFactory as _t
-from .interfaces import IBMCFacade
-from .interfaces import IHMMFacade
 from Products.ZenUtils.Utils import executeCommand
-import logging
-log = logging.getLogger('.'.join(['', __name__]))
+from interfaces import IBMCFacade
+from interfaces import IHMMFacade
+
+LOG = logging.getLogger('.'.join(['', __name__]))
+ARGS = namedtuple('ARGS', ['arg1', 'arg2', 'arg3', 'arg4', 'arg5',
+                           'arg6', 'arg7', 'arg8', 'arg9', 'arg10'])
 
 
 class BMCFacade(ZuulFacade):
-    '''
+    """
     BMC Facade
-    '''
+    """
     implements(IBMCFacade)
 
     def extractips(self, ips, iplist):
-        '''
+        """
         extractips
-        '''
+        """
         deviceip1 = ips.replace(' ', '')
         for ipstr in deviceip1.split(","):
             if ipstr == '':
@@ -41,14 +47,14 @@ class BMCFacade(ZuulFacade):
     #  The object is passed in addition to the comment and rackSlot
 
     def bootsequencesingle(self, deviceip, bootsequence, allbmcdevice):
-        '''
+        """
         bootsequencesingle
-        '''
+        """
         deviceroot = self._dmd.getDmdRoot("Devices")
         device = deviceroot.findDevice(deviceip)
         if device is None:
             return [deviceip, "device Not found!"]
-        log.debug("myFacadeFunc data %s %s %s %s", deviceip,
+        LOG.debug("myFacadeFunc data %s %s %s %s", deviceip,
                   allbmcdevice, device.__class__, device.zSnmpVer)
         arg1 = deviceip
         arg2 = "-" + device.zSnmpVer
@@ -65,28 +71,30 @@ class BMCFacade(ZuulFacade):
         predefinedcmd = []
         if arg2 == "-v2c":
             predefinedcmd = [
-                libexec + '/bmcbootsequence.sh', arg1, arg2, arg3, arg4,
+                os.path.join(
+                    libexec, 'bmcbootsequence.sh'), arg1, arg2, arg3, arg4,
                 arg5, arg6, arg7, arg8, arg9]
         else:
             predefinedcmd = [
-                libexec + '/bmcbootsequence.sh', arg1, arg2, arg3, arg4,
+                os.path.join(
+                    libexec, 'bmcbootsequence.sh'), arg1, arg2, arg3, arg4,
                 arg5, arg6, arg7, arg8, arg9]
         result = executeCommand(predefinedcmd, None, None)
         retstr = "Fail"
         if result == 0:
             retstr = "Success"
-        log.info("executeCommand result %s ", result)
+        LOG.info("executeCommand result %s ", result)
         return [deviceip, retstr]
 
     def bootsequencetype(self, deviceip, bootsequence, allbmcdevice):
-        '''
+        """
         bootsequencetype
-        '''
+        """
         deviceroot = self._dmd.getDmdRoot("Devices")
         device = deviceroot.findDevice(deviceip)
         if device is None:
             return [deviceip, "device Not found!"]
-        log.debug("myFacadeFunc data %s %s %s %s", deviceip,
+        LOG.debug("myFacadeFunc data %s %s %s %s", deviceip,
                   allbmcdevice, device.__class__, device.zSnmpVer)
         arg1 = deviceip
         arg2 = "-" + device.zSnmpVer
@@ -107,18 +115,20 @@ class BMCFacade(ZuulFacade):
         predefinedcmd = []
         if arg2 == "-v2c":
             predefinedcmd = [
-                libexec + '/bmcboottype.sh', arg1, arg2, arg3, arg4,
+                os.path.join(
+                    libexec, 'bmcboottype.sh'), arg1, arg2, arg3, arg4,
                 arg5, arg6, arg7, arg8, arg9]
         else:
             predefinedcmd = [
-                libexec + '/bmcboottype.sh', arg1, arg2, arg3, arg4,
+                os.path.join(
+                    libexec, 'bmcboottype.sh'), arg1, arg2, arg3, arg4,
                 arg5, arg6, arg7, arg8, arg9]
         result = executeCommand(predefinedcmd, None, None)
 
         retstr = "Fail"
         if result == 0:
             retstr = "Success"
-        log.info("executeCommand result %s ", result)
+        LOG.info("executeCommand result %s ", result)
         return [deviceip, retstr]
 
     def bootsequence(self, devobj, deviceip, bootsequence, boottype):
@@ -136,9 +146,9 @@ class BMCFacade(ZuulFacade):
         return True, _t("BMC Boot Sequence set device %s" % ipret)
 
     def frupowerctrlsingle(self, deviceip, frupowercontrol):
-        '''
+        """
         frupowerctrlsingle
-        '''
+        """
         deviceroot = self._dmd.getDmdRoot("Devices")
         device = deviceroot.findDevice(deviceip)
         if device is None:
@@ -163,17 +173,19 @@ class BMCFacade(ZuulFacade):
         predefinedcmd = []
         if arg2 == "-v2c":
             predefinedcmd = [
-                libexec + '/bmcfrupowercontrol.sh', arg1, arg2, arg3, arg4,
+                os.path.join(
+                    libexec, 'bmcfrupowercontrol.sh'), arg1, arg2, arg3, arg4,
                 arg5, arg6, arg7, arg8, arg9]
         else:
             predefinedcmd = [
-                libexec + '/bmcfrupowercontrol.sh', arg1, arg2, arg3, arg4,
+                os.path.join(
+                    libexec, 'bmcfrupowercontrol.sh'), arg1, arg2, arg3, arg4,
                 arg5, arg6, arg7, arg8, arg9]
         result = executeCommand(predefinedcmd, None, None)
         retstr = "Fail"
         if result == 0:
             retstr = "Success"
-        log.info("executeCommand result %s ", result)
+        LOG.info("executeCommand result %s ", result)
         return [deviceip, retstr]
 
     def frupowerctrl(self, devobj, deviceip, frunum, frupowercontrol):
@@ -190,16 +202,17 @@ class BMCFacade(ZuulFacade):
 
 
 class HMMFacade(ZuulFacade):
-    '''
+    """
     HMM Facade
-    '''
+    """
     implements(IHMMFacade)
+
     # deprecated class for can not link with URL router
 
     def extractips(self, ips, iplist):
-        '''
+        """
         extractips
-        '''
+        """
         deviceip1 = ips.replace(' ', '')
         for ipstr in deviceip1.split(","):
             if ipstr == '':
@@ -215,38 +228,40 @@ class HMMFacade(ZuulFacade):
             else:
                 iplist.append(ipstr)
 
-    def biosbootoptionsingleblade(self, arg1, arg2, arg3, arg4, arg5,
-                                  arg6, arg7, arg8, arg9, arg10):
-        '''
+    def biosbootoptionsingleblade(self, args):
+        """
         biosbootoptionsingleblade
-        '''
-        log.info("biosbootoptionsingleblade entry")
+        """
+        LOG.info("biosbootoptionsingleblade entry")
         libexec = os.path.join(os.path.dirname(__file__), 'libexec')
         predefinedcmd = []
-        if arg2 == "-v2c":
+        if args.arg2 == "-v2c":
             predefinedcmd = [
-                libexec + '/hmmbladebiosbootoption.sh', arg1, arg2,
-                arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10]
+                os.path.join(
+                    libexec, 'hmmbladebiosbootoption.sh'), args.arg1, args.arg2,
+                args.arg3, args.arg4, args.arg5, args.arg6, args.arg7,
+                args.arg8, args.arg9, args.arg10]
         else:
             predefinedcmd = [
-                libexec + '/hmmbladebiosbootoption.sh', arg1, arg2,
-                arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10]
+                os.path.join(
+                    libexec, 'hmmbladebiosbootoption.sh'), args.arg1, args.arg2,
+                args.arg3, args.arg4, args.arg5, args.arg6, args.arg7,
+                args.arg8, args.arg9, args.arg10]
         result = executeCommand(predefinedcmd, None, None)
-        log.info("executeCommand result %s ", result)
+        LOG.info("executeCommand result %s ", result)
         return result
 
-    def biosbootoptionsingle(self, devobj, deviceip, hmmbladenum, hmmbbo,
-                             hmmbotype):
-        '''
+    def biosbootoptionsingle(self, devobj, deviceip, hmm_info):
+        """
         biosbootoptionsingle
-        '''
+        """
         devobj = devobj
         deviceroot = self._dmd.getDmdRoot("Devices")
         device = deviceroot.findDevice(deviceip)
         if device is None:
-            log.info("device Not found")
+            LOG.info("device Not found")
             return [deviceip, "device Not found!"]
-        log.info("myFacadeFunc data %s %s %s", deviceip,
+        LOG.info("myFacadeFunc data %s %s %s", deviceip,
                  device.__class__, device.zSnmpVer)
         arg1 = deviceip
         arg2 = "-" + device.zSnmpVer
@@ -256,23 +271,23 @@ class HMMFacade(ZuulFacade):
         arg6 = "-A" + device.zSnmpAuthPassword
         arg7 = "-x" + device.zSnmpPrivType
         arg8 = "-X" + device.zSnmpPrivPassword
-        arg9 = hmmbladenum
-        arg10 = str(hmmbbo)
+        arg9 = hmm_info.hmmbladenum
+        arg10 = str(hmm_info.hmmbbo)
 
-        if hmmbotype == 0:
+        if hmm_info.hmmbotype == 0:
             arg10 = "disable"
-        elif hmmbotype == 1:
-            arg10 = "once,"+str(hmmbbo)
+        elif hmm_info.hmmbotype == 1:
+            arg10 = "once," + str(hmm_info.hmmbbo)
         else:
-            arg10 = "persistent,"+str(hmmbbo)
+            arg10 = "persistent," + str(hmm_info.hmmbbo)
 
         bladelist = []
-        if hmmbladenum.isdigit():
-            bladelist.append(hmmbladenum)
-        elif ',' in hmmbladenum:
-            bladelist = hmmbladenum.split(",")
-        elif '-' in hmmbladenum:
-            bladeliststr = hmmbladenum.split("-")
+        if hmm_info.hmmbladenum.isdigit():
+            bladelist.append(hmm_info.hmmbladenum)
+        elif ',' in hmm_info.hmmbladenum:
+            bladelist = hmm_info.hmmbladenum.split(",")
+        elif '-' in hmm_info.hmmbladenum:
+            bladeliststr = hmm_info.hmmbladenum.split("-")
             if len(bladeliststr) == 2:
                 rangestart = int(bladeliststr[0])
                 rangeend = int(bladeliststr[1])
@@ -281,7 +296,11 @@ class HMMFacade(ZuulFacade):
                 else:
                     for iptmp in range(rangestart, rangeend + 1):
                         bladelist.append(str(iptmp))
+        args = ARGS._make([arg1, arg2, arg3, arg4, arg5,
+                           arg6, arg7, arg8, arg9, arg10])
+        return self.biosbootoptionsingleresult(deviceip, bladelist, args)
 
+    def biosbootoptionsingleresult(self, deviceip, bladelist, args):
         ipret = []
         for bladen in bladelist:
             if not bladen.isdigit():
@@ -290,68 +309,72 @@ class HMMFacade(ZuulFacade):
                 continue
 
             arg9 = str(bladen)
+            args = args._replace(arg9=str(bladen))
             retstr = "Fail"
-            ret = self.biosbootoptionsingleblade(
-                arg1, arg2, arg3, arg4, arg5,
-                arg6, arg7, arg8, arg9, arg10)
+            ret = self.biosbootoptionsingleblade(args)
             if ret == 0:
                 retstr = "Success"
             ipret.append([arg9, retstr])
-
         return [deviceip, ipret]
 
-    def biosbootoption(self, devobj, deviceip, hmmbladenum, hmmbbo,
-                       hmmbotype):
+    def biosbootoption(self, devobj, deviceip, hmm_info):
         """ Modifies bladenum and biosbootoption attributes for a device """
         iplist = []
         ipret = []
         self.extractips(deviceip, iplist)
+
         for ipstr in iplist:
-            ipret.append(self.biosbootoptionsingle(devobj, ipstr,
-                                                   hmmbladenum, hmmbbo,
-                                                   hmmbotype))
+            ipret.append(self.biosbootoptionsingle(devobj, ipstr, hmm_info))
 
         return True, _t("HMM Bios Boot Option set device %s" % ipret)
 
-    def frucontrolsingleblade(self, arg1, arg2, arg3, arg4, arg5,
-                              arg6, arg7, arg8, arg9, arg10):
-        '''
+    def frucontrolsingleblade(self, args):
+        """
         frucontrolsingleblade
-        '''
+        """
         libexec = os.path.join(os.path.dirname(__file__), 'libexec')
         predefinedcmd = []
         # 2018-01-12 add power on and off oid
-        valarg = int(arg10)
+        valarg = int(args.arg10)
         if valarg >= 100:
             if valarg == 100:
                 arg10 = "poweron"
             if valarg == 101:
                 arg10 = "poweroff"
-            if arg2 == "-v2c":
+            args = args._replace(arg10=arg10)
+            if args.arg2 == "-v2c":
                 predefinedcmd = [
-                    libexec + '/hmmbladefruonoff.sh', arg1, arg2,
-                    arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10]
+                    os.path.join(
+                        libexec, 'hmmbladefruonoff.sh'), args.arg1, args.arg2,
+                    args.arg3, args.arg4, args.arg5, args.arg6,
+                    args.arg7, args.arg8, args.arg9, args.arg10]
             else:
                 predefinedcmd = [
-                    libexec + '/hmmbladefruonoff.sh', arg1, arg2,
-                    arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10]
+                    os.path.join(
+                        libexec, 'hmmbladefruonoff.sh'), args.arg1, args.arg2,
+                    args.arg3, args.arg4, args.arg5, args.arg6,
+                    args.arg7, args.arg8, args.arg9, args.arg10]
         else:
-            if arg2 == "-v2c":
+            if args.arg2 == "-v2c":
                 predefinedcmd = [
-                    libexec + '/hmmbladefrucontrol.sh', arg1, arg2,
-                    arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10]
+                    os.path.join(
+                        libexec, 'hmmbladefrucontrol.sh'), args.arg1, args.arg2,
+                    args.arg3, args.arg4, args.arg5, args.arg6,
+                    args.arg7, args.arg8, args.arg9, args.arg10]
             else:
                 predefinedcmd = [
-                    libexec + '/hmmbladefrucontrol.sh', arg1, arg2,
-                    arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10]
+                    os.path.join(
+                        libexec, 'hmmbladefrucontrol.sh'), args.arg1, args.arg2,
+                    args.arg3, args.arg4, args.arg5, args.arg6,
+                    args.arg7, args.arg8, args.arg9, args.arg10]
         result = executeCommand(predefinedcmd, None, None)
-        log.info("executeCommand result %s ", result)
+        LOG.info("executeCommand result %s ", result)
         return result
 
     def frucontrolsingle(self, devobj, deviceip, hmmbladenum, hmmfrucontrol):
-        '''
+        """
         frucontrolsingle
-        '''
+        """
         devobj = devobj
         deviceroot = self._dmd.getDmdRoot("Devices")
         device = deviceroot.findDevice(deviceip)
@@ -389,30 +412,27 @@ class HMMFacade(ZuulFacade):
                 else:
                     for iptmp in range(rangestart, rangeend + 1):
                         bladelist.append(str(iptmp))
+        args = ARGS._make([arg1, arg2, arg3, arg4, arg5,
+                           arg6, arg7, arg8, arg9, arg10])
+        return self.frucontrolsingleresult(deviceip, bladelist, args)
 
+    def frucontrolsingleresult(self, deviceip, bladelist, args):
         ipret = []
         for bladen in bladelist:
             if not bladen.isdigit():
                 continue
             if int(bladen) < 1 or int(bladen) > 32:
                 continue
-
-            arg9 = str(bladen)
+            args = args._replace(arg9=str(bladen))
             retstr = "Fail"
-            ret = self.frucontrolsingleblade(arg1, arg2, arg3, arg4,
-                                             arg5, arg6, arg7, arg8,
-                                             arg9, arg10)
+            ret = self.frucontrolsingleblade(args)
             if ret == 0:
                 retstr = "Success"
-            ipret.append([arg9, retstr])
-
+            ipret.append([args.arg9, retstr])
         return [deviceip, ipret]
 
-    def frucontrol(self, devobj, deviceip, hmmbladenum, hmmfrunum,
-                   hmmfrucontrol, hmmallblade):
+    def frucontrol(self, devobj, deviceip, hmmbladenum, hmmfrucontrol):
         """ Modifies frunum and frupowercontrol attributes for a device """
-        hmmfrunum = hmmfrunum
-        hmmallblade = hmmallblade
         iplist = []
         ipret = []
         self.extractips(deviceip, iplist)
